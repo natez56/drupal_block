@@ -1,0 +1,23 @@
+<?php
+
+
+function internsd8_views_pre_render(&$view) {
+    if ($view->id() == 'most_recent_posts') {
+        $i = 0;
+        foreach ($view->result as &$result) {
+            $data = $result->_entity->get('field_image')->getValue()[0];
+
+            if ($i == 0) {
+                $data['width'] = "480";
+                $data['height'] = "480";
+            } else {
+                $data['width'] = "200";
+                $data['height'] = "200";
+            }
+
+            $result->_entity->set('field_image', array($data));
+            $i++;
+        }
+
+    }
+}
